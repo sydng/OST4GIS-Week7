@@ -125,11 +125,19 @@ of the application to report this information.
 
 ===================== */
 
-var dataset = ""
+var dataset = "https://raw.githubusercontent.com/CPLN-692-401/datasets/master/geojson/philadelphia-garbage-collection-boundaries.geojson";
 var featureGroup;
 
 var myStyle = function(feature) {
-  return {};
+  switch(feature.properties.COLLDAY) {
+    case "MON": return {color: "red"};
+    case "TUE": return {color: "orange"};
+    case 'WED': return {color: "yellow"};
+    case "THU": return {color: "purple"};
+    case "FRI": return {color: "blue"};
+    case " ": return {color: "white"};
+  }
+  //var test = _.chain(feature).groupBy("COLLDAY").value();
 };
 
 var showResults = function() {
@@ -145,6 +153,13 @@ var showResults = function() {
   $('#results').show();
 };
 
+var statistics = function(object) {
+  var stats = _.chain(object).groupBy('COLLDAY').value();
+  var friday = stats.FRI.length;
+  console.log(friday);
+
+  //$('.count-here').text("FRIDAY: " + stats.FRI.length);
+};
 
 var eachFeatureFunction = function(layer) {
   layer.on('click', function (event) {
@@ -153,18 +168,35 @@ var eachFeatureFunction = function(layer) {
     Check out layer.feature to see some useful data about the layer that
     you can use in your application.
     ===================== */
-    console.log(layer.feature);
+
+    map.fitBounds(this.getBounds());  //zoom and center on the objects when clicked
+    if(layer.feature.properties.COLLDAY === "MON") {
+      $('.day-of-week').text("Monday");
+    } else if (layer.feature.properties.COLLDAY === "TUE") {
+      $('.day-of-week').text("Tuesday");
+    } else if (layer.feature.properties.COLLDAY === "WED") {
+      $('.day-of-week').text("Wednesday");
+    } else if (layer.feature.properties.COLLDAY === "THU") {
+      $('.day-of-week').text("Thursday");
+    } else {
+      $('.day-of-week').text("Friday");
+    }
+    //console.log(layer.feature.properties.COLLDAY);
+    //console.log(layer.feature.properties.getLayerId);
     showResults();
   });
 };
 
 var myFilter = function(feature) {
-  return true;
+  if(feature.COLLDAY != " ") {
+    return feature;
+  }
 };
 
 $(document).ready(function() {
   $.ajax(dataset).done(function(data) {
     var parsedData = JSON.parse(data);
+    console.log($('.count-here').text(statistics(data)));
     featureGroup = L.geoJson(parsedData, {
       style: myStyle,
       filter: myFilter

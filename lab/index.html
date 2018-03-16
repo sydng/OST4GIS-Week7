@@ -18,6 +18,8 @@
         <p>This application shows each region color coded based on day of
         week of garbage collection. To get more information about garbage
         collection for one of the regions, click on that region on the map.</p>
+        <h3>Garbage Collection Statistics</h3>
+        <p class = "count-here">count here</p>
       </div>
       <div id="results" style="display: none;">
         <h1 class="day-of-week">Day of Week</h1>
@@ -31,7 +33,19 @@
     <!-- Map -->
     <div id="map" class="map"></div>
     <!-- Legend -->
-    <div class="legend"></div>
+    <div class="legend">
+       <h5> Collection Days </h5>
+       <div class = "mBox"> </div>
+       <h6> Monday</h6>
+       <div class = "tuBox"> </div>
+       <h6> Tuesday </h6>
+       <div class = "wBox"> </div>
+       <h6> Wednesday </h6>
+       <div class = "thBox"> </div>
+       <h6> Thursday </h6>
+       <div class = "fBox"> </div>
+       <h6> Friday </h6>
+    </div>
     <!-- Javascript Imports -->
     <script src="js/jquery-2.2.0.js"></script>
     <script src="js/underscore.js"></script>

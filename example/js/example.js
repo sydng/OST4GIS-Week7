@@ -2,18 +2,21 @@
   Global Variables
 ===================== */
 var data;  // for holding data
-var stringFilter = "";
+var stringFilter = "";  //will help filter the name based on what is being typed into the text box
 var selectValue = 'All';
 
 /* =====================
   Map Setup
 ===================== */
 // Notice that we've been using an options object since week 1 without realizing it
+// there are many options that could be provided -- look at Leaflet documentation
+// will change default way the application works
+// ex: zoomDelta -- changes how much zoom one can do at a time; 3 means goes from 2 to 5
 var mapOpts = {
   center: [0, 0],
   zoom: 2
 };
-var map = L.map('map', mapOpts);
+var map = L.map('map', mapOpts);  //'map' -- is putting this on the div with ID map
 
 // Another options object
 var tileOpts = {
@@ -26,7 +29,7 @@ var tileOpts = {
 var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', tileOpts).addTo(map);
 
 // Ajax to grab json
-var getData = $.ajax('https://raw.githubusercontent.com/CPLN-692-401/datasets/master/json/world-country-capitals.json')
+var getData = $.ajax('https://raw.githubusercontent.com/CPLN-692-401/datasets/master/json/world-country-capitals.json');
 
 /* =====================
   Parse and store data for later use
@@ -36,6 +39,8 @@ var parseData = function(res) {
   var parsedRes = JSON.parse(res);
 
   // Store our (now parsed) data to the global variable `data`
+  //chain together different operations
+  //need to call value() at end to get the results
   data = _.chain(parsedRes)
     .map(function(datum) {
 
@@ -66,6 +71,7 @@ var parseData = function(res) {
       var markerArray = _.map(group, function(datum) { return datum.marker; });
       var fitBoundsOptions = { padding: [15, 15] };  // An options object
 
+      //featureGroup is a way to organize markers that are made
       return {
         data: group,
         features: L.featureGroup(markerArray)
@@ -114,12 +120,14 @@ var filterAndPlot = function() {
  * Note the naming scheme - the 'onEventOccurrence' naming scheme is very common for functions
  * such as this.
  */
+
+ //changing gloabl variables at the top of the application
 var onStringFilterChange = function(e) {
   stringFilter = e.target.value.toLowerCase();
   filterAndPlot();
 };
 
-var onSelectChange = function() {
+var onSelectChange = function(e) {
   selectValue = e.target.value;
   filterAndPlot();
 };

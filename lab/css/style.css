@@ -30,5 +30,59 @@ p.main {
 .legend {
   position: absolute;
   background-color: #fff;
+  padding: 15px;
+  right: 10px;
+  bottom: 10px;
   z-index: 2000;
+  text-align: right;
+}
+
+.mBox {
+  position: absolute;
+  background-color: red;
+  right: 85px;
+  bottom: 185px;
+  z-index: 2001;
+  height: 15px;
+  width: 15px;
+}
+
+.tuBox {
+  position: absolute;
+  background-color: orange;
+  right: 85px;
+  bottom: 150px;
+  z-index: 2001;
+  height: 15px;
+  width: 15px;
+}
+
+.wBox {
+  position: absolute;
+  background-color: yellow;
+  right: 85px;
+  bottom: 112px;
+  z-index: 2001;
+  height: 15px;
+  width: 15px;
+}
+
+.thBox {
+  position: absolute;
+  background-color: purple;
+  right: 85px;
+  bottom: 75px;
+  z-index: 2001;
+  height: 15px;
+  width: 15px;
+}
+
+.fBox {
+  position: absolute;
+  background-color: blue;
+  right: 85px;
+  bottom: 37px;
+  z-index: 2001;
+  height: 15px;
+  width: 15px;
 }
